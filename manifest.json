@@ -2,7 +2,7 @@
 	"manifest_version": 2,
 	"name": "sample app",
 	"version": "1.0",
-	"description": "Make link of current tab quickly",
+	"description": "show html title",
 	"browser_action": {
 		"default_popup": "popup.html",
 		"default_icon": "icon.png"
