@@ -1,16 +1,17 @@
 {
-  "manifest_version": 2,
-  "name": "sample app",
-  "version": "1.0",
-  "description": "Make link of current tab quickly",
-  "browser_action": {
-    "default_popup": "popup.html",
-    "default_icon": "icon.png"
-  },
-  "permissions": [
-    "tabs"
-  ],
-  "icons" : {
-    "128": "icon.png"
-  }
+	"manifest_version": 2,
+	"name": "sample app",
+	"version": "1.0",
+	"description": "Make link of current tab quickly",
+	"browser_action": {
+		"default_popup": "popup.html",
+		"default_icon": "icon.png"
+	},
+	"permissions": [
+		"tabs"
+	],
+	"content_security_policy": "script-src 'self' https://api.trello.com/; object-src 'self'",
+	"icons" : {
+		"128": "icon.png"
+	}
 }
