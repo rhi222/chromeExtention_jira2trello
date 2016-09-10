@@ -5,9 +5,12 @@ $(function () {
 		},
 		function(tabs) {
 			var tab = tabs[0];
+			console.log(tab);
+			//console.log($('#description'));
 			//$('#key-val').data('issue-key')
 			$('#title').text(tab.title);
-			//$('#url').text(tab.url);
+			//$('#detail').text(tab.title);
+			$('#url').text(tab.url);
 		}
 	);
 });
