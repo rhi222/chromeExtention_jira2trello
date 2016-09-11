@@ -1,19 +1,8 @@
-// only first time, you need get token by Trello.authorize();
-/*
-Trello.authorize({
-	//type: 'redirect',
-	type: 'popup',
-	name: 'nishiyama sample app',
-	persist: true,
-	scope: {
-		read: 'true',
-		write: 'true' },
-	expiration: 'never',
-	interactive:true,
-	success: onAuthorizeSuccessful,
-	error: authenticationFailure
-});
-*/
+/* background.js
+ * keep info
+ *
+ */
+
 alert("start background.js");
 
 var parsedItems = [];

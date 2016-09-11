@@ -1,8 +1,9 @@
+/* contentscript.js
+ * here, get some dom contents
+ */
 alert("contentscript start");
 var dueDate = $("#due-date time").attr("datetime");
-alert("due = " + dueDate);
 var jiraTitle = $("title").text();
-alert("name = " + jiraTitle);
 var link = $(location).attr('href');
 var description = $("#description-val").text();
 

@@ -1,3 +1,7 @@
+/* trello.js
+ * make new card using trello api
+ */
+
 // only first time, you need get token by Trello.authorize();
 /*
 Trello.authorize({
@@ -19,19 +23,18 @@ function authenticationFailure() {
 */
 alert("start trello.js");
 
-function onAuthorizeSuccessful(cardInfo) {
+function createCard(cardInfo) {
 	alert("start do post");
 	//FIXME hard codeing //var token = Trello.token();
 	var myAppKey = '26354b78b272424132568887c9814aa8';
 	var myToken = '194b776780a5f76a7370be06eb9633c19055ba4584fbe9d2cc3ca1806ca6ad6c';
-
 	//cf. https://customer.io/actions/trello/
 	var myList = '5667d7e7c6b75b90d6abce14';
 	var dueDate = cardInfo[0];
 	var jiraTitle = cardInfo[1];
 	var link = cardInfo[2];
-	//var description = 'This is the description of our new card.';
 	var description = cardInfo[3];
+
 	var newCard = {
 		key: myAppKey,
 		token: myToken,
@@ -43,6 +46,7 @@ function onAuthorizeSuccessful(cardInfo) {
 		urlSource: link,
 		due: dueDate
 	};
+
 	var url = 'https://trello.com/1/cards';
 	//only post method can access
 	//httpGet(url);
@@ -62,5 +66,5 @@ var cardInfo = chrome.extension.getBackgroundPage().parsedItems;
 
 alert("cardInfo at trello.js");
 alert(cardInfo);
-onAuthorizeSuccessful(cardInfo);
+createCard(cardInfo);
 
