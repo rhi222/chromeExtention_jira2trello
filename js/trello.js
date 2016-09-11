@@ -13,54 +13,43 @@ Trello.authorize({
 	success: onAuthorizeSuccessful,
 	error: authenticationFailure
 });
+function authenticationFailure() {
+	alert("Failed authentication");
+};
 */
 alert("start trello.js");
 
-var parsedItems = [];
-chrome.runtime.onMessage.addListener(
-	function(request, sender, sendResponse) {
-		var dueDate = request.dueDate;
-		var jiraTitle = request.jiraTitle;
-		alert("addListener jiraTitle");
-		alert(request.due);
-		parsedItems.push(request.due);
-		parsedItems.push(request.name);
-		sendResponse({messeage: 'finish'});
-});
-
-
 function onAuthorizeSuccessful(cardInfo) {
 	alert("start do post");
-	//FIXME hard codeing
-	//var token = Trello.token();
-	var token = '194b776780a5f76a7370be06eb9633c19055ba4584fbe9d2cc3ca1806ca6ad6c';
+	//FIXME hard codeing //var token = Trello.token();
+	var myAppKey = '26354b78b272424132568887c9814aa8';
+	var myToken = '194b776780a5f76a7370be06eb9633c19055ba4584fbe9d2cc3ca1806ca6ad6c';
 
 	//cf. https://customer.io/actions/trello/
 	var myList = '5667d7e7c6b75b90d6abce14';
-	var url = 'https://trello.com/1/cards';
 	var dueDate = cardInfo[0];
 	var jiraTitle = cardInfo[1];
+	var link = cardInfo[2];
+	//var description = 'This is the description of our new card.';
+	var description = cardInfo[3];
 	var newCard = {
-		key: '26354b78b272424132568887c9814aa8',
-		token: '194b776780a5f76a7370be06eb9633c19055ba4584fbe9d2cc3ca1806ca6ad6c',
+		key: myAppKey,
+		token: myToken,
 		idList: myList,
 		name: jiraTitle,
-		desc: 'This is the description of our new card.',
+		desc: description,
 		// Place this card at the top of our list
 		pos: 'top',
-		urlSource: 'http://www.forcia.com/',
+		urlSource: link,
 		due: dueDate
 	};
+	var url = 'https://trello.com/1/cards';
 	//only post method can access
 	//httpGet(url);
 	$.post(url, newCard, function(data, status){
 		alert('Card created successfully. Data returned:' + JSON.stringify(data));
 	});
 	alert("Trello.post done");
-};
-
-function authenticationFailure() {
-	alert("Failed authentication");
 };
 
 function httpGet(theUrl) {
@@ -71,7 +60,7 @@ function httpGet(theUrl) {
 };
 var cardInfo = chrome.extension.getBackgroundPage().parsedItems;
 
-alert("cardInfo");
+alert("cardInfo at trello.js");
 alert(cardInfo);
 onAuthorizeSuccessful(cardInfo);
 
