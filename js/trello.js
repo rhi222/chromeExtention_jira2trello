@@ -1,4 +1,3 @@
-//alert("before auth");
 // only first time, you need get token by Trello.authorize();
 /*
 Trello.authorize({
@@ -15,10 +14,23 @@ Trello.authorize({
 	error: authenticationFailure
 });
 */
-//alert("after auth1");
+alert("start trello.js");
 
-function onAuthorizeSuccessful() {
-	alert("onAuthorizeSuccessful!!!!");
+var parsedItems = [];
+chrome.runtime.onMessage.addListener(
+	function(request, sender, sendResponse) {
+		var dueDate = request.dueDate;
+		var jiraTitle = request.jiraTitle;
+		alert("addListener jiraTitle");
+		alert(request.due);
+		parsedItems.push(request.due);
+		parsedItems.push(request.name);
+		sendResponse({messeage: 'finish'});
+});
+
+
+function onAuthorizeSuccessful(cardInfo) {
+	alert("start do post");
 	//FIXME hard codeing
 	//var token = Trello.token();
 	var token = '194b776780a5f76a7370be06eb9633c19055ba4584fbe9d2cc3ca1806ca6ad6c';
@@ -26,16 +38,18 @@ function onAuthorizeSuccessful() {
 	//cf. https://customer.io/actions/trello/
 	var myList = '5667d7e7c6b75b90d6abce14';
 	var url = 'https://trello.com/1/cards';
+	var dueDate = cardInfo[0];
+	var jiraTitle = cardInfo[1];
 	var newCard = {
 		key: '26354b78b272424132568887c9814aa8',
 		token: '194b776780a5f76a7370be06eb9633c19055ba4584fbe9d2cc3ca1806ca6ad6c',
 		idList: myList,
-		name: 'nishiyama_ryohei222',
+		name: jiraTitle,
 		desc: 'This is the description of our new card.',
 		// Place this card at the top of our list
 		pos: 'top',
 		urlSource: 'http://www.forcia.com/',
-		due: '2016-10-11'
+		due: dueDate
 	};
 	//only post method can access
 	//httpGet(url);
@@ -55,6 +69,9 @@ function httpGet(theUrl) {
 	xmlHttp.send( null );
 	return xmlHttp.responseText;
 };
+var cardInfo = chrome.extension.getBackgroundPage().parsedItems;
 
-onAuthorizeSuccessful();
+alert("cardInfo");
+alert(cardInfo);
+onAuthorizeSuccessful(cardInfo);
 
